@@ -1,0 +1,46 @@
+ # extends 'base.html' 
+
+{% block content %}
+
+<section class="hero">
+    <h2>Bem-vindo à Sua Plataforma</h2>
+    <p>Aqui você encontra tudo o que precisa para **{{ beneficio_principal }}**. Explore nossos produtos, faça compras com segurança e aproveite a melhor experiência do mercado.</p>
+    <a href="{% url 'products' %}" class="button">Conheça nossos produtos</a>
+</section>
+
+<section class="about">
+    <h2>Sobre a Plataforma</h2>
+    <p>Sua Plataforma foi criada em **{{ ano_fundacao }}** com o objetivo de **{{ missao }}**. Somos uma empresa **{{ valores }}**, e estamos sempre buscando oferecer o melhor para nossos clientes.</p>
+    <ul>
+        <li>**{{ destaque_1 }}**</li>
+        <li>**{{ destaque_2 }}**</li>
+        <li>**{{ destaque_3 }}**</li>
+    </ul>
+</section>
+
+<section class="testimonials">
+    <h2>O que nossos clientes dizem</h2>
+    <ul>
+        {% for depoimento in depoimentos %}
+        <li>
+            <blockquote>
+                "{{ depoimento.texto }}"
+            </blockquote>
+            <p>- {{ depoimento.nome }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+
+<section class="contact">
+    <h2>Contato</h2>
+    <p>Dúvidas ou sugestões? Entre em contato conosco!</p>
+    <form action="#">
+        <input type="text" placeholder="Nome">
+        <input type="email" placeholder="E-mail">
+        <textarea placeholder="Mensagem"></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+</section>
+
+{% endblock %}

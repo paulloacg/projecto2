@@ -1,0 +1,65 @@
+ #extends 'base.html'
+
+{% block content %}
+
+<section class="produtos">
+    <h2>Produtos</h2>
+    <form action="#">
+        <label for="filtro">Filtrar por:</label>
+        <select id="filtro" name="filtro">
+            <option value="">Todos</option>
+            {% for categoria in categorias %}
+                <option value="{{ categoria.slug }}">{{ categoria.nome }}</option>
+            {% endfor %}
+        </select>
+        <label for="ordem">Ordenar por:</label>
+        <select id="ordem" name="ordem">
+            <option value="preco">Preço</option>
+            <option value="data">Data</option>
+            <option value="relevancia">Relevância</option>
+        </select>
+    </form>
+    <ul class="lista-produtos">
+        {% for produto in produtos %}
+        <li class="produto">
+            <a href="{% url 'produto' produto.id %}">
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                <h3>{{ produto.nome }}</h3>
+                <p>{{ produto.descricao }}</p>
+                <span class="preco">R$ {{ produto.preco }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+<script>
+    // Filtro de produtos
+    const filtro = document.getElementById('filtro');
+    const ordem = document.getElementById('ordem');
+    const listaProdutos = document.querySelector('.lista-produtos');
+    
+    filtro.addEventListener('change', () => {
+        atualizarProdutos(); // Implemente essa função
+    });
+    
+    ordem.addEventListener('change', () => {
+        atualizarProdutos(); // Implemente essa função
+    });
+    
+    function atualizarProdutos() {
+        const filtroSelecionado = filtro.value;
+        const ordemSelecionada = ordem.value;
+        const url = `{% url 'products' %}?filtro=${filtroSelecionado}&ordem=${ordemSelecionada}`;
+    
+        // Pode usar fetch ou outras bibliotecas para requisições
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                listaProdutos.innerHTML = html; // Troca o conteúdo da lista com os produtos atualizados
+            });
+    }
+    </script>
+    
+
+{% endblock %}
+
